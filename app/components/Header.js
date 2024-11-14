@@ -4,10 +4,19 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { headerMenuItems } from "../data/mockData";
+import CreatePost from "./CreatePost";
 
 export default function Header() {
   const [activeMenu, setActiveMenu] = useState(null);
   const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
 
   return (
     <header className="sticky top-0 z-50 bg-background-light dark:bg-background-dark border-b border-background-alt-light dark:border-background-alt-dark">
@@ -74,11 +83,26 @@ export default function Header() {
 
           {/* Search Bar */}
           <div className="hidden md:block relative flex-grow max-w-xl">
-            <input
-              type="text"
-              placeholder="Search RedditClone"
-              className="w-full bg-background-alt-light dark:bg-background-alt-dark rounded-full py-1.5 px-4 focus:outline-none focus:ring-2 focus:ring-accent-yellow transition-all"
-            />
+            <form onSubmit={handleSearch} className="relative">
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search EduReddit..."
+                className="w-full bg-background-alt-light dark:bg-background-alt-dark rounded-full py-1.5 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-accent-yellow transition-all"
+              />
+              <button
+                type="submit"
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+              >
+                🔍
+              </button>
+            </form>
+          </div>
+
+          {/* Create Post Button */}
+          <div className="hidden md:block w-60">
+            <CreatePost inHeader={true} />
           </div>
         </div>
 

@@ -137,7 +137,9 @@ export default function Home() {
               </p>
             </div>
           </div>
-          <button className="button-primary w-full">Try Now</button>
+          <Link href="/premium" className="button-primary w-full">
+            Try Now
+          </Link>
         </div>
 
         {/* Trending Topics */}

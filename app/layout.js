@@ -5,8 +5,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Reddit Clone",
-  description: "A modern Reddit clone built with Next.js",
+  title: "EduReddit - Learn and Share",
+  description: "A modern Reddit built with Next.js",
 };
 
 export default function RootLayout({ children }) {

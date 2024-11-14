@@ -7,7 +7,7 @@ export const mockPosts = [
     upvotes: 1234,
     comments: 45,
     timeAgo: "2 hours ago",
-    subreddit: "programming",
+    subreddit: "technology",
     image: "https://picsum.photos/seed/tech1/600/400",
   },
   {

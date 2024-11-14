@@ -40,22 +40,21 @@ const COMMUNITY_RULES = [
   // Add more rules...
 ];
 
-export default function CommunityPage() {
-  const { community } = useParams();
+export default function SubredditPage({ params: { subreddit } }) {
   const [activeTab, setActiveTab] = useState("posts");
   const [sortBy, setSortBy] = useState("hot");
   const [showJoinModal, setShowJoinModal] = useState(false);
 
   // Mock community data
   const communityData = {
-    name: community,
+    name: subreddit,
     description:
       "A vibrant community dedicated to sharing knowledge and fostering discussions about technology and innovation.",
     memberCount: 125000,
     onlineCount: 1200,
     createdDate: "2020-01-15",
-    bannerImage: `https://picsum.photos/seed/${community}/1000/200`,
-    icon: `https://picsum.photos/seed/${community}icon/100`,
+    bannerImage: `https://picsum.photos/seed/${subreddit}/1000/200`,
+    icon: `https://picsum.photos/seed/${subreddit}icon/100`,
     moderators: ["mod1", "mod2", "mod3"],
     tags: ["Technology", "Innovation", "Discussion"],
     flairs: ["Discussion", "News", "Tutorial", "Question"],

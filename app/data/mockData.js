@@ -195,7 +195,7 @@ export const popularCommunities = [
     activeUsers: "12.5k",
   },
   {
-    name: "Gaming",
+    name: "JJRLaudato",
     members: "1.8M",
     image: "https://picsum.photos/seed/gaming/50",
     description: "A community for gamers to discuss all things gaming",

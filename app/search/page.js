@@ -1,76 +1,98 @@
+"use client";
+
+import { useSearchParams } from "next/navigation";
+import { useState, useEffect } from "react";
+import SearchBar from "../components/SearchBar";
+import SearchResults from "../components/SearchResults";
+
+// Mock data - replace with actual API calls
+const mockSearch = async (query) => {
+  // Simulate API delay
+  await new Promise((resolve) => setTimeout(resolve, 500));
+
+  return [
+    {
+      id: 1,
+      type: "post",
+      title: "Research Methods in Computer Science",
+      description: "A comprehensive guide to research methodologies in CS...",
+      url: "/post/1",
+      date: "2024-01-15",
+      comments: 25,
+    },
+    {
+      id: 2,
+      type: "user",
+      title: "Dr. Jane Smith",
+      description: "Professor of Computer Science at MIT",
+      url: "/user/jsmith",
+      date: "2024-01-10",
+    },
+    {
+      id: 3,
+      type: "community",
+      title: "Machine Learning Research",
+      description: "A community for ML researchers and enthusiasts",
+      url: "/r/mlresearch",
+      date: "2024-01-01",
+    },
+    // Add more mock results...
+  ].filter(
+    (item) =>
+      item.title.toLowerCase().includes(query.toLowerCase()) ||
+      item.description.toLowerCase().includes(query.toLowerCase())
+  );
+};
+
 export default function SearchPage() {
+  const searchParams = useSearchParams();
+  const query = searchParams.get("q") || "";
+  const [results, setResults] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const performSearch = async () => {
+      if (!query.trim()) {
+        setResults([]);
+        return;
+      }
+
+      setIsLoading(true);
+      try {
+        const searchResults = await mockSearch(query);
+        setResults(searchResults);
+      } catch (error) {
+        console.error("Search failed:", error);
+        setResults([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    performSearch();
+  }, [query]);
+
   return (
-    <div className="max-w-4xl mx-auto">
-      <div className="glass-effect p-6 rounded-xl mb-8">
-        <h1 className="text-2xl font-bold mb-4">AI-Powered Search</h1>
-        <div className="relative">
-          <input
-            type="text"
-            placeholder="Ask anything or search for content..."
-            className="w-full glass-effect rounded-lg py-3 px-4 pr-12 focus:outline-none focus:ring-2 focus:ring-orange-500 text-lg"
-          />
-          <button className="absolute right-3 top-1/2 -translate-y-1/2 button-primary">
+    <main className="min-h-screen bg-background-light dark:bg-background-dark py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-text-primary-light dark:text-text-primary-dark mb-4">
             Search
-          </button>
-        </div>
-        <div className="mt-4 text-sm text-gray-400">
-          Try: "Find posts about machine learning" or "Show me the most popular gaming communities"
-        </div>
-      </div>
-
-      <div className="space-y-6">
-        <div className="card">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold">Popular Searches</h2>
-            <button className="text-sm text-orange-500 hover:text-orange-400">View all</button>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            {[
-              "AI and Machine Learning",
-              "Web Development",
-              "Gaming News",
-              "Technology Trends",
-            ].map((topic) => (
-              <button
-                key={topic}
-                className="glass-effect p-3 rounded-lg text-left hover:bg-white/5 transition-colors"
-              >
-                {topic}
-              </button>
-            ))}
-          </div>
+          </h1>
+          <SearchBar
+            variant="main"
+            placeholder="Search posts, users, or communities..."
+          />
         </div>
 
-        <div className="card">
-          <h2 className="text-lg font-semibold mb-4">Trending Topics</h2>
-          <div className="space-y-4">
-            {[
-              {
-                topic: "Artificial Intelligence",
-                posts: 1234,
-                trending: "+15%",
-              },
-              {
-                topic: "Programming",
-                posts: 856,
-                trending: "+8%",
-              },
-              // Add more trending topics
-            ].map((item) => (
-              <div
-                key={item.topic}
-                className="flex items-center justify-between hover-effect p-3 rounded-lg"
-              >
-                <div>
-                  <h3 className="font-medium">{item.topic}</h3>
-                  <p className="text-sm text-gray-400">{item.posts} posts</p>
-                </div>
-                <span className="text-green-500">{item.trending}</span>
-              </div>
-            ))}
+        {isLoading ? (
+          <div className="flex justify-center items-center py-12">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
           </div>
-        </div>
+        ) : (
+          <SearchResults results={results} query={query} />
+        )}
       </div>
-    </div>
+    </main>
   );
 }

@@ -7,17 +7,25 @@ export default function CreatePost() {
   const [isOpen, setIsOpen] = useState(false);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [postType, setPostType] = useState('text'); // 'text', 'image', 'link'
+  const [postType, setPostType] = useState('text');
   const [imageUrl, setImageUrl] = useState('');
   const [linkUrl, setLinkUrl] = useState('');
   const [selectedTopic, setSelectedTopic] = useState('');
   const [tags, setTags] = useState([]);
   const [newTag, setNewTag] = useState('');
+  const [academicLevel, setAcademicLevel] = useState('');
+  const [isResearchPaper, setIsResearchPaper] = useState(false);
+  const [citations, setCitations] = useState('');
   const router = useRouter();
 
   const topics = [
-    'Technology', 'Gaming', 'Sports', 'News', 'Entertainment',
-    'Science', 'Art', 'Music', 'Food', 'Travel'
+    'Computer Science', 'Mathematics', 'Physics', 'Chemistry', 'Biology',
+    'Engineering', 'Medicine', 'Psychology', 'Economics', 'Literature',
+    'History', 'Philosophy', 'Sociology', 'Political Science', 'Education'
+  ];
+
+  const academicLevels = [
+    'Undergraduate', 'Graduate', 'Doctoral', 'Post-Doctoral', 'Professional'
   ];
 
   const handleAddTag = () => {
@@ -40,6 +48,9 @@ export default function CreatePost() {
       postType,
       topic: selectedTopic,
       tags,
+      academicLevel,
+      isResearchPaper,
+      citations: isResearchPaper ? citations : undefined,
       ...(postType === 'image' && { imageUrl }),
       ...(postType === 'link' && { linkUrl }),
     };
@@ -55,6 +66,9 @@ export default function CreatePost() {
     setLinkUrl('');
     setSelectedTopic('');
     setTags([]);
+    setAcademicLevel('');
+    setIsResearchPaper(false);
+    setCitations('');
     setIsOpen(false);
   };
 
@@ -62,19 +76,19 @@ export default function CreatePost() {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="w-full px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors font-medium shadow-sm"
+        className="w-full px-4 py-2 bg-accent-yellow text-primary-navy rounded-lg hover:bg-primary-navy hover:text-support-white transition-colors font-medium shadow-sm"
       >
-        Create Post
+        Create Academic Post
       </button>
 
       {isOpen && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white dark:bg-gray-800 rounded-lg w-full max-w-3xl p-6 shadow-xl max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-primary-navy/50 flex items-center justify-center p-4 z-50">
+          <div className="bg-support-white rounded-lg w-full max-w-3xl p-6 shadow-xl max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold dark:text-white">Create a Post</h2>
+              <h2 className="text-2xl font-bold text-primary-navy">Create an Academic Post</h2>
               <button
                 onClick={() => setIsOpen(false)}
-                className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                className="text-primary-gray hover:text-interactive-red transition-colors"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -84,25 +98,37 @@ export default function CreatePost() {
             
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Post Type Selection */}
-              <div className="flex gap-4 border-b dark:border-gray-700 pb-4">
+              <div className="flex gap-4 border-b border-support-lightgray pb-4">
                 <button
                   type="button"
                   onClick={() => setPostType('text')}
-                  className={`px-4 py-2 rounded-lg ${postType === 'text' ? 'bg-orange-500 text-white' : 'bg-gray-100 dark:bg-gray-700'}`}
+                  className={`px-4 py-2 rounded-lg transition-colors ${
+                    postType === 'text'
+                      ? 'bg-accent-yellow text-primary-navy'
+                      : 'bg-support-lightgray text-primary-gray hover:bg-primary-navy/10'
+                  }`}
                 >
                   Text Post
                 </button>
                 <button
                   type="button"
                   onClick={() => setPostType('image')}
-                  className={`px-4 py-2 rounded-lg ${postType === 'image' ? 'bg-orange-500 text-white' : 'bg-gray-100 dark:bg-gray-700'}`}
+                  className={`px-4 py-2 rounded-lg transition-colors ${
+                    postType === 'image'
+                      ? 'bg-accent-yellow text-primary-navy'
+                      : 'bg-support-lightgray text-primary-gray hover:bg-primary-navy/10'
+                  }`}
                 >
                   Image Post
                 </button>
                 <button
                   type="button"
                   onClick={() => setPostType('link')}
-                  className={`px-4 py-2 rounded-lg ${postType === 'link' ? 'bg-orange-500 text-white' : 'bg-gray-100 dark:bg-gray-700'}`}
+                  className={`px-4 py-2 rounded-lg transition-colors ${
+                    postType === 'link'
+                      ? 'bg-accent-yellow text-primary-navy'
+                      : 'bg-support-lightgray text-primary-gray hover:bg-primary-navy/10'
+                  }`}
                 >
                   Link Post
                 </button>
@@ -110,48 +136,80 @@ export default function CreatePost() {
 
               {/* Title */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
+                <label className="block text-sm font-medium text-primary-gray mb-2">
                   Title
                 </label>
                 <input
                   type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                  placeholder="Give your post a title"
+                  className="w-full px-4 py-2 rounded-lg border border-support-lightgray bg-support-white focus:outline-none focus:ring-2 focus:ring-interactive-blue focus:border-interactive-blue"
+                  placeholder="Give your academic post a title"
                   required
                 />
               </div>
 
+              {/* Academic Level */}
+              <div>
+                <label className="block text-sm font-medium text-primary-gray mb-2">
+                  Academic Level
+                </label>
+                <select
+                  value={academicLevel}
+                  onChange={(e) => setAcademicLevel(e.target.value)}
+                  className="w-full px-4 py-2 rounded-lg border border-support-lightgray bg-support-white focus:outline-none focus:ring-2 focus:ring-interactive-blue focus:border-interactive-blue"
+                  required
+                >
+                  <option value="">Select academic level</option>
+                  {academicLevels.map((level) => (
+                    <option key={level} value={level}>{level}</option>
+                  ))}
+                </select>
+              </div>
+
               {/* Topic Selection */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
-                  Topic
+                <label className="block text-sm font-medium text-primary-gray mb-2">
+                  Academic Field
                 </label>
                 <select
                   value={selectedTopic}
                   onChange={(e) => setSelectedTopic(e.target.value)}
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                  className="w-full px-4 py-2 rounded-lg border border-support-lightgray bg-support-white focus:outline-none focus:ring-2 focus:ring-interactive-blue focus:border-interactive-blue"
                   required
                 >
-                  <option value="">Select a topic</option>
+                  <option value="">Select an academic field</option>
                   {topics.map((topic) => (
                     <option key={topic} value={topic}>{topic}</option>
                   ))}
                 </select>
               </div>
 
+              {/* Research Paper Toggle */}
+              <div className="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  id="researchPaper"
+                  checked={isResearchPaper}
+                  onChange={(e) => setIsResearchPaper(e.target.checked)}
+                  className="w-4 h-4 text-interactive-blue focus:ring-interactive-blue border-support-lightgray rounded"
+                />
+                <label htmlFor="researchPaper" className="text-sm font-medium text-primary-gray">
+                  This is a research paper
+                </label>
+              </div>
+
               {/* Content based on post type */}
               {postType === 'text' && (
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
+                  <label className="block text-sm font-medium text-primary-gray mb-2">
                     Content
                   </label>
                   <textarea
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
-                    className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white h-40"
-                    placeholder="What's on your mind?"
+                    className="w-full px-4 py-2 rounded-lg border border-support-lightgray bg-support-white focus:outline-none focus:ring-2 focus:ring-interactive-blue focus:border-interactive-blue h-40"
+                    placeholder={isResearchPaper ? "Enter your research paper abstract or summary..." : "Share your academic insights..."}
                     required
                   />
                 </div>
@@ -159,15 +217,15 @@ export default function CreatePost() {
 
               {postType === 'image' && (
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
+                  <label className="block text-sm font-medium text-primary-gray mb-2">
                     Image URL
                   </label>
                   <input
                     type="url"
                     value={imageUrl}
                     onChange={(e) => setImageUrl(e.target.value)}
-                    className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                    placeholder="Enter image URL"
+                    className="w-full px-4 py-2 rounded-lg border border-support-lightgray bg-support-white focus:outline-none focus:ring-2 focus:ring-interactive-blue focus:border-interactive-blue"
+                    placeholder="Enter image URL (diagrams, charts, etc.)"
                     required
                   />
                 </div>
@@ -175,52 +233,66 @@ export default function CreatePost() {
 
               {postType === 'link' && (
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
+                  <label className="block text-sm font-medium text-primary-gray mb-2">
                     Link URL
                   </label>
                   <input
                     type="url"
                     value={linkUrl}
                     onChange={(e) => setLinkUrl(e.target.value)}
-                    className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                    placeholder="Enter link URL"
+                    className="w-full px-4 py-2 rounded-lg border border-support-lightgray bg-support-white focus:outline-none focus:ring-2 focus:ring-interactive-blue focus:border-interactive-blue"
+                    placeholder="Enter academic resource URL"
                     required
+                  />
+                </div>
+              )}
+
+              {isResearchPaper && (
+                <div>
+                  <label className="block text-sm font-medium text-primary-gray mb-2">
+                    Citations
+                  </label>
+                  <textarea
+                    value={citations}
+                    onChange={(e) => setCitations(e.target.value)}
+                    className="w-full px-4 py-2 rounded-lg border border-support-lightgray bg-support-white focus:outline-none focus:ring-2 focus:ring-interactive-blue focus:border-interactive-blue h-24"
+                    placeholder="Enter your paper's citations..."
                   />
                 </div>
               )}
 
               {/* Tags */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
-                  Tags
+                <label className="block text-sm font-medium text-primary-gray mb-2">
+                  Academic Tags
                 </label>
                 <div className="flex gap-2 mb-2">
                   <input
                     type="text"
                     value={newTag}
                     onChange={(e) => setNewTag(e.target.value)}
-                    className="flex-1 px-4 py-2 rounded-lg border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                    placeholder="Add a tag"
+                    className="flex-1 px-4 py-2 rounded-lg border border-support-lightgray bg-support-white focus:outline-none focus:ring-2 focus:ring-interactive-blue focus:border-interactive-blue"
+                    placeholder="Add relevant academic tags"
                   />
                   <button
                     type="button"
                     onClick={handleAddTag}
-                    className="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
+                    className="px-4 py-2 bg-interactive-blue text-support-white rounded-lg hover:bg-primary-navy transition-colors"
                   >
-                    Add
+                    Add Tag
                   </button>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center gap-2"
+                      className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-primary-navy/10 text-primary-navy"
                     >
                       {tag}
                       <button
                         type="button"
                         onClick={() => handleRemoveTag(tag)}
-                        className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                        className="ml-2 text-primary-navy hover:text-interactive-red"
                       >
                         ×
                       </button>
@@ -229,17 +301,17 @@ export default function CreatePost() {
                 </div>
               </div>
 
-              <div className="flex justify-end gap-3">
+              <div className="flex justify-end space-x-4">
                 <button
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  className="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg dark:text-gray-300 dark:hover:bg-gray-700 transition-colors"
+                  className="px-4 py-2 text-primary-gray hover:text-primary-navy transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors font-medium shadow-sm"
+                  className="px-6 py-2 bg-accent-yellow text-primary-navy rounded-lg hover:bg-primary-navy hover:text-support-white transition-colors font-medium"
                 >
                   Post
                 </button>

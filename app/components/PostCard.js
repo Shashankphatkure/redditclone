@@ -1,170 +1,56 @@
-import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import {
+  ArrowUpIcon,
+  ArrowDownIcon,
+  ChatBubbleLeftIcon,
+  ShareIcon,
+  BookmarkIcon,
+} from "@heroicons/react/24/outline";
 
 export default function PostCard({ post }) {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [voteStatus, setVoteStatus] = useState(null); // null, 'up', or 'down'
-  const [saved, setSaved] = useState(false);
-
-  const handleVote = (direction) => {
-    setVoteStatus(voteStatus === direction ? null : direction);
-  };
-
   return (
-    <article className="bg-background-light dark:bg-background-dark rounded-lg shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden">
-      {/* Vote Column */}
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4">
+      {/* Vote buttons */}
       <div className="flex">
-        <div className="w-12 bg-background-alt-light dark:bg-background-alt-dark flex flex-col items-center py-2">
-          <button
-            onClick={() => handleVote("up")}
-            className={`p-1 rounded transition-colors ${
-              voteStatus === "up"
-                ? "text-accent-yellow"
-                : "text-text-secondary-light dark:text-text-secondary-dark hover:bg-background-alt-light dark:hover:bg-background-alt-dark"
-            }`}
-          >
-            ↑
+        <div className="flex flex-col items-center mr-4">
+          <button className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">
+            <ArrowUpIcon className="h-6 w-6" />
           </button>
-          <span
-            className={`text-sm font-medium ${
-              voteStatus === "up"
-                ? "text-accent-yellow"
-                : voteStatus === "down"
-                ? "text-interactive-red"
-                : "text-text-secondary-light dark:text-text-secondary-dark"
-            }`}
-          >
-            {post.upvotes}
-          </span>
-          <button
-            onClick={() => handleVote("down")}
-            className={`p-1 rounded transition-colors ${
-              voteStatus === "down"
-                ? "text-interactive-red"
-                : "text-text-secondary-light dark:text-text-secondary-dark hover:bg-background-alt-light dark:hover:bg-background-alt-dark"
-            }`}
-          >
-            ↓
+          <span className="my-1 font-medium">{post.upvotes}</span>
+          <button className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">
+            <ArrowDownIcon className="h-6 w-6" />
           </button>
         </div>
 
-        {/* Main Content */}
-        <div className="flex-1 p-4">
-          {/* Post Header */}
-          <div className="flex items-center space-x-2 text-sm">
-            {post.communityIcon && (
-              <Image
-                src={post.communityIcon}
-                alt={post.community}
-                width={20}
-                height={20}
-                className="rounded-full"
-              />
-            )}
-            <Link
-              href={`/r/${post.community}`}
-              className="font-medium text-text-primary-light dark:text-text-primary-dark hover:underline"
-            >
-              r/{post.community}
+        {/* Post content */}
+        <div className="flex-1">
+          <div className="text-sm text-gray-500 dark:text-gray-400">
+            <Link href={`/r/${post.subreddit}`} className="hover:underline">
+              r/{post.subreddit}
             </Link>
-            <span className="text-text-secondary-light dark:text-text-secondary-dark">
-              •
-            </span>
-            <span className="text-text-secondary-light dark:text-text-secondary-dark">
-              Posted by{" "}
-              <Link href={`/u/${post.author}`} className="hover:underline">
-                u/{post.author}
-              </Link>
-            </span>
-            <span className="text-text-secondary-light dark:text-text-secondary-dark">
-              {post.timeAgo}
-            </span>
+            <span className="mx-1">•</span>
+            Posted by u/{post.author} {post.timeAgo}
           </div>
+          <h2 className="text-lg font-medium my-2">{post.title}</h2>
+          <p className="text-gray-800 dark:text-gray-200">{post.content}</p>
 
-          {/* Post Title */}
-          <h2 className="text-lg font-medium text-text-primary-light dark:text-text-primary-dark mt-2">
-            <Link href={`/post/${post.id}`} className="hover:underline">
-              {post.title}
-            </Link>
-          </h2>
-
-          {/* Post Content */}
-          {post.content && (
-            <div
-              className={`mt-2 text-text-secondary-light dark:text-text-secondary-dark ${
-                !isExpanded && "line-clamp-3"
-              }`}
-            >
-              <p>{post.content}</p>
-              {post.content.length > 200 && (
-                <button
-                  onClick={() => setIsExpanded(!isExpanded)}
-                  className="text-interactive-blue hover:underline mt-1"
-                >
-                  {isExpanded ? "Show less" : "Read more"}
-                </button>
-              )}
-            </div>
-          )}
-
-          {/* Post Image */}
-          {post.imageUrl && (
-            <div className="relative mt-3 rounded-lg overflow-hidden">
-              <Image
-                src={post.imageUrl}
-                alt={post.title}
-                width={800}
-                height={400}
-                className="object-cover hover:scale-105 transition-transform duration-200"
-              />
-            </div>
-          )}
-
-          {/* Awards and Tags */}
-          <div className="flex flex-wrap items-center gap-2 mt-3">
-            {post.awards?.map((award) => (
-              <span
-                key={award}
-                className="px-2 py-1 text-xs rounded-full bg-accent-yellow/10 text-accent-yellow-dark"
-              >
-                {award}
-              </span>
-            ))}
-            {post.tags?.map((tag) => (
-              <span
-                key={tag}
-                className="px-2 py-1 text-xs rounded-full bg-background-alt-light dark:bg-background-alt-dark text-text-secondary-light dark:text-text-secondary-dark"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-
-          {/* Action Buttons */}
+          {/* Action buttons */}
           <div className="flex items-center space-x-4 mt-4">
-            <button className="flex items-center space-x-2 text-text-secondary-light dark:text-text-secondary-dark hover:bg-background-alt-light dark:hover:bg-background-alt-dark px-3 py-2 rounded-full transition-colors">
-              <span>💬</span>
+            <button className="flex items-center space-x-1 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 px-2 py-1 rounded">
+              <ChatBubbleLeftIcon className="h-5 w-5" />
               <span>{post.comments} Comments</span>
             </button>
-            <button className="flex items-center space-x-2 text-text-secondary-light dark:text-text-secondary-dark hover:bg-background-alt-light dark:hover:bg-background-alt-dark px-3 py-2 rounded-full transition-colors">
-              <span>↗️</span>
+            <button className="flex items-center space-x-1 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 px-2 py-1 rounded">
+              <ShareIcon className="h-5 w-5" />
               <span>Share</span>
             </button>
-            <button
-              onClick={() => setSaved(!saved)}
-              className={`flex items-center space-x-2 px-3 py-2 rounded-full transition-colors ${
-                saved
-                  ? "text-accent-yellow bg-accent-yellow/10"
-                  : "text-text-secondary-light dark:text-text-secondary-dark hover:bg-background-alt-light dark:hover:bg-background-alt-dark"
-              }`}
-            >
-              <span>{saved ? "⭐" : "☆"}</span>
-              <span>{saved ? "Saved" : "Save"}</span>
+            <button className="flex items-center space-x-1 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 px-2 py-1 rounded">
+              <BookmarkIcon className="h-5 w-5" />
+              <span>Save</span>
             </button>
           </div>
         </div>
       </div>
-    </article>
+    </div>
   );
 }

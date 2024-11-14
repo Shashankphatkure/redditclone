@@ -1,71 +1,27 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: "class",
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  darkMode: "media",
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-      },
       colors: {
-        // Primary colors
-        primary: {
-          DEFAULT: "#1B2A49", // Navy blue
-          light: "#2E2E3A", // Deep gray
-          dark: "#141E35", // Darker navy for dark mode
-        },
-        // Background colors
-        background: {
-          light: "#FFFFFF",
-          dark: "#1A1A1F",
-          alt: {
-            light: "#F1F1F1",
-            dark: "#2E2E3A",
-          },
-        },
-        // Text colors
-        text: {
-          primary: {
-            light: "#1B2A49",
-            dark: "#FFFFFF",
-          },
-          secondary: {
-            light: "#4B5563",
-            dark: "#9CA3AF",
-          },
-        },
-        // Accent colors
-        accent: {
-          yellow: {
-            DEFAULT: "#FFC107",
-            hover: "#FFB300",
-            dark: "#FFD54F",
-          },
-          green: {
-            DEFAULT: "#34A853",
-            hover: "#2E9648",
-            dark: "#4CAF50",
-          },
-        },
-        // Interactive elements
-        interactive: {
-          blue: {
-            DEFAULT: "#1E90FF",
-            hover: "#1873CC",
-            dark: "#40A9FF",
-          },
-          red: {
-            DEFAULT: "#FF6D6D",
-            hover: "#FF5252",
-            dark: "#FF8A8A",
-          },
-        },
+        "background-light": "#FFFFFF",
+        "background-dark": "#1A1A1B",
+        "background-alt-light": "#F6F7F8",
+        "background-alt-dark": "#272729",
+        "text-primary-light": "#1C1C1C",
+        "text-primary-dark": "#D7DADC",
+        "text-secondary-light": "#787C7E",
+        "text-secondary-dark": "#818384",
+        "accent-yellow": "#FFB000",
+        "accent-yellow-dark": "#D4921B",
+        "accent-yellow-hover": "#FFA000",
+        "accent-green": "#46D160",
+        "accent-green-dark": "#3AA04D",
       },
     },
   },

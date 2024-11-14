@@ -1,97 +1,55 @@
 export const mockPosts = [
   {
     id: 1,
-    title: "Introducing our new AI-powered recommendation system",
-    author: "tech_enthusiast",
-    community: "r/Technology",
-    communityIcon: "https://picsum.photos/seed/tech/50",
-    upvotes: 1542,
-    comments: 324,
-    timeAgo: "5 hours ago",
-    content: "We've been working on this for months and finally ready to share our new AI-powered recommendation system. This system uses state-of-the-art machine learning algorithms to provide personalized content recommendations.",
-    image: "https://picsum.photos/seed/ai/800/400",
-  },
-  {
-    id: 2,
-    title: "The future of web development: A deep dive into new frameworks",
-    author: "webdev_pro",
-    community: "r/programming",
-    communityIcon: "https://picsum.photos/seed/prog/50",
-    upvotes: 892,
-    comments: 156,
-    timeAgo: "2 hours ago",
-    content: "As we move into 2024, here are the frameworks that are changing the game...",
-    image: "https://picsum.photos/seed/web/800/400",
-  },
-  {
-    id: 3,
-    title: "Just captured this stunning sunset in Norway",
-    author: "nature_photographer",
-    community: "r/EarthPorn",
-    communityIcon: "https://picsum.photos/seed/earth/50",
-    upvotes: 2341,
-    comments: 89,
-    timeAgo: "8 hours ago",
-    image: "https://picsum.photos/seed/norway/800/400",
-  },
-  {
-    id: 4,
-    title: "My first attempt at digital art - Cyberpunk City",
-    author: "digital_artist",
-    community: "r/DigitalArt",
-    communityIcon: "https://picsum.photos/seed/art/50",
-    upvotes: 567,
+    title: "Check out this amazing project",
+    author: "techie123",
+    content: "Just launched my new project using Next.js and Tailwind!",
+    upvotes: 1234,
     comments: 45,
-    timeAgo: "3 hours ago",
-    image: "https://picsum.photos/seed/cyber/800/400",
+    timeAgo: "2 hours ago",
+    subreddit: "programming",
   },
-];
-
-export const popularCommunities = [
-  {
-    name: "r/Technology",
-    icon: "https://picsum.photos/seed/tech/50",
-    members: "2.1M",
-    description: "The latest news and discussions about technology",
-  },
-  {
-    name: "r/programming",
-    icon: "https://picsum.photos/seed/prog/50",
-    members: "1.8M",
-    description: "Programming discussions and news",
-  },
-  {
-    name: "r/EarthPorn",
-    icon: "https://picsum.photos/seed/earth/50",
-    members: "3.2M",
-    description: "Beautiful images of our planet",
-  },
-  {
-    name: "r/DigitalArt",
-    icon: "https://picsum.photos/seed/art/50",
-    members: "890K",
-    description: "A community for digital artists",
-  },
+  // Add more mock posts as needed
 ];
 
 export const trendingTopics = [
   {
     topic: "Artificial Intelligence",
-    posts: 1234,
-    trending: "+15%",
-    image: "https://picsum.photos/seed/ai2/400",
+    posts: "1234",
+    image: "https://picsum.photos/seed/ai/400/300",
   },
   {
     topic: "Web Development",
-    posts: 856,
-    trending: "+8%",
-    image: "https://picsum.photos/seed/web2/400",
+    posts: "856",
+    image: "https://picsum.photos/seed/web/400/300",
   },
   {
     topic: "Digital Art",
-    posts: 654,
-    trending: "+12%",
-    image: "https://picsum.photos/seed/art2/400",
+    posts: "654",
+    image: "https://picsum.photos/seed/art/400/300",
+  },
+];
+
+export const popularCommunities = [
+  {
+    name: "Technology",
+    members: "2.1M",
+    image: "https://picsum.photos/seed/tech/50",
+  },
+  {
+    name: "Gaming",
+    members: "1.8M",
+    image: "https://picsum.photos/seed/gaming/50",
+  },
+  {
+    name: "Science",
+    members: "3.2M",
+    image: "https://picsum.photos/seed/science/50",
+  },
+  {
+    name: "Movies",
+    members: "890K",
+    image: "https://picsum.photos/seed/movies/50",
   },
 ];
 

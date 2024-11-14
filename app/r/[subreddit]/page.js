@@ -3,10 +3,13 @@ import { useState } from "react";
 import { mockPosts, popularCommunities } from "../../data/mockData";
 import PostCard from "../../components/PostCard";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 
-export default function SubredditPage({ params }) {
+export default function SubredditPage() {
+  const { subreddit } = useParams();
+  const [activeTab, setActiveTab] = useState("posts");
   const [sortBy, setSortBy] = useState("hot");
-  const { subreddit } = params;
+  const [showJoinModal, setShowJoinModal] = useState(false);
 
   // Get community info
   const communityInfo = popularCommunities.find(

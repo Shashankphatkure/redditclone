@@ -60,38 +60,58 @@ export default function Home() {
       {/* Main Content */}
       <div className="col-span-1 lg:col-span-7 space-y-4">
         {/* Create Post Card */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm">
-          <div className="p-4">
-            <div className="flex items-center space-x-4">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-accent-yellow-dark to-accent-green-dark animate-pulse" />
-              <input
-                type="text"
-                placeholder="Create Post"
-                className="flex-1 bg-background-alt-light dark:bg-background-alt-dark rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-accent-yellow transition-all"
-              />
-            </div>
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all p-6 border border-gray-100 dark:border-gray-700">
+          <div className="flex items-center space-x-4 mb-6">
+            <div className="w-12 h-12 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 animate-pulse shadow-lg ring-4 ring-purple-100 dark:ring-gray-700" />
+            <input
+              type="text"
+              placeholder="Create a post..."
+              className="flex-1 bg-gray-50 dark:bg-gray-700/50 rounded-2xl py-4 px-8 focus:outline-none focus:ring-4 focus:ring-purple-200 dark:focus:ring-purple-900 transition-all placeholder-gray-400 dark:placeholder-gray-500 text-gray-700 dark:text-gray-200 text-lg font-medium"
+            />
           </div>
 
           {/* Post Type Selector */}
-          <div className="flex border-t border-background-alt-light dark:border-background-alt-dark">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {[
-              { type: "text", icon: "📝", label: "Text" },
-              { type: "image", icon: "🖼️", label: "Image" },
-              { type: "link", icon: "🔗", label: "Link" },
-              { type: "poll", icon: "📊", label: "Poll" },
-            ].map(({ type, icon, label }) => (
+              {
+                type: "text",
+                icon: "📝",
+                label: "Text Post",
+                color: "from-blue-500 to-cyan-400",
+              },
+              {
+                type: "image",
+                icon: "🖼️",
+                label: "Share Image",
+                color: "from-green-500 to-emerald-400",
+              },
+              {
+                type: "link",
+                icon: "🔗",
+                label: "Share Link",
+                color: "from-orange-500 to-amber-400",
+              },
+              {
+                type: "poll",
+                icon: "📊",
+                label: "Create Poll",
+                color: "from-purple-500 to-pink-400",
+              },
+            ].map(({ type, icon, label, color }) => (
               <button
                 key={type}
                 onClick={() => setPostType(type)}
-                className={`flex-1 p-3 flex items-center justify-center space-x-2 transition-colors
+                className={`p-4 rounded-xl flex flex-col items-center justify-center space-y-2 transition-all duration-300
                   ${
                     postType === type
-                      ? "bg-accent-yellow/10 text-accent-yellow-dark"
-                      : "hover:bg-background-alt-light dark:hover:bg-background-alt-dark"
+                      ? `bg-gradient-to-r ${color} text-white shadow-lg scale-105`
+                      : "bg-gray-50 dark:bg-gray-700/50 hover:bg-gradient-to-r hover:from-gray-50 hover:to-gray-100 dark:hover:from-gray-700 dark:hover:to-gray-600 hover:scale-105"
                   }`}
               >
-                <span>{icon}</span>
-                <span>{label}</span>
+                <span className="text-2xl mb-1">{icon}</span>
+                <span className="font-medium text-sm whitespace-nowrap">
+                  {label}
+                </span>
               </button>
             ))}
           </div>

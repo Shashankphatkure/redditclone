@@ -81,7 +81,14 @@ export default function TopicPage() {
         <div className="absolute inset-0 bg-gradient-to-t from-background-dark/80 to-transparent" />
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center text-white">
-            <div className="text-6xl mb-4">{topicData.icon}</div>
+            <div className="relative w-24 h-24 mx-auto mb-4">
+              <Image
+                src={topicData.icon}
+                alt={`${topicData.name} icon`}
+                fill
+                className="object-contain"
+              />
+            </div>
             <h1 className="text-4xl font-bold mb-2">{topicData.name}</h1>
             <p className="text-lg opacity-90">{topicData.description}</p>
           </div>
